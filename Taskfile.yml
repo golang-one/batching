@@ -1,0 +1,19 @@
+# https://taskfile.dev
+
+version: '3'
+
+tasks:
+  test:
+    desc: Run tests
+    cmds:
+      - go test -race -cpu=1,2,4 -count=1000 -coverprofile=coverage.out ./...
+  
+  lint:
+    desc: Run golangci-lint
+    cmds:
+      - golangci-lint run
+
+  format:
+    desc: Format code
+    cmds:
+      - go fmt ./...
