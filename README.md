@@ -1,10 +1,10 @@
 # Batching
 
+[![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
+[![GoDoc](https://godoc.org/github.com/golang-one/batching?status.svg)](https://godoc.org/github.com/golang-one/batching)
 [![CI](https://github.com/golang-one/batching/actions/workflows/ci.yaml/badge.svg)](https://github.com/golang-one/batching/actions/workflows/ci.yaml)
 [![Go Report Card](https://goreportcard.com/badge/github.com/golang-one/batching)](https://goreportcard.com/report/github.com/golang-one/batching)
 [![Coverage](https://coveralls.io/repos/github/golang-one/batching/badge.svg?branch=master)](https://coveralls.io/github/golang-one/batching?branch=master)
-[![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
-
 
 ## Motivation
 
@@ -12,7 +12,12 @@ This package is designed as a helper to improve the efficiency and performance o
 
 ## Use
 
-Use `batching.Do` for operations which do not return results.
+Install the package:
+```
+$ go get github.com/golang-one/batching
+```
+
+Use `batching.Do` for operations which do not return results:
 ```go
 var (
     ctx   = context.Background()
@@ -40,7 +45,7 @@ fmt.Println(time.Since(start))
 */
 ```
 
-Use `batching.Pipe` for operations which return results.
+Use `batching.Pipe` for operations which return results:
 ```go
 var (
     ctx   = context.Background()
@@ -71,6 +76,5 @@ fmt.Println(time.Since(start))
     processing [1 2]
     processing [9]
     2.001943909s
-    PASS
 */
 ```
