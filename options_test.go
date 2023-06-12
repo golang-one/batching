@@ -1,9 +1,8 @@
 package batching
 
 import (
+	"reflect"
 	"testing"
-
-	"github.com/stretchr/testify/require"
 )
 
 func TestDoOptions(t *testing.T) {
@@ -12,11 +11,11 @@ func TestDoOptions(t *testing.T) {
 			batchSize: -1,
 		}
 
-		require.Equal(t, BatchSize(-1).do(doOpts).batchSize, -1)
-		require.Equal(t, BatchSize(0).do(doOpts).batchSize, -1)
-		require.Equal(t, BatchSize(1).do(doOpts).batchSize, 1)
-		require.Equal(t, BatchSize(2).do(doOpts).batchSize, 2)
-		require.Equal(t, BatchSize(3).do(doOpts).batchSize, 3)
+		requireEqual(t, -1, BatchSize(-1).do(doOpts).batchSize)
+		requireEqual(t, -1, BatchSize(0).do(doOpts).batchSize)
+		requireEqual(t, 1, BatchSize(1).do(doOpts).batchSize)
+		requireEqual(t, 2, BatchSize(2).do(doOpts).batchSize)
+		requireEqual(t, 3, BatchSize(3).do(doOpts).batchSize)
 	})
 
 	t.Run("minSizeForConcurrency", func(t *testing.T) {
@@ -24,11 +23,11 @@ func TestDoOptions(t *testing.T) {
 			minSizeForConcurrency: -1,
 		}
 
-		require.Equal(t, MinSizeForConcurrency(-1).do(doOpts).minSizeForConcurrency, -1)
-		require.Equal(t, MinSizeForConcurrency(0).do(doOpts).minSizeForConcurrency, -1)
-		require.Equal(t, MinSizeForConcurrency(1).do(doOpts).minSizeForConcurrency, -1)
-		require.Equal(t, MinSizeForConcurrency(2).do(doOpts).minSizeForConcurrency, 2)
-		require.Equal(t, MinSizeForConcurrency(3).do(doOpts).minSizeForConcurrency, 3)
+		requireEqual(t, -1, MinSizeForConcurrency(-1).do(doOpts).minSizeForConcurrency)
+		requireEqual(t, -1, MinSizeForConcurrency(0).do(doOpts).minSizeForConcurrency)
+		requireEqual(t, -1, MinSizeForConcurrency(1).do(doOpts).minSizeForConcurrency)
+		requireEqual(t, 2, MinSizeForConcurrency(2).do(doOpts).minSizeForConcurrency)
+		requireEqual(t, 3, MinSizeForConcurrency(3).do(doOpts).minSizeForConcurrency)
 	})
 
 	t.Run("maxThreads", func(t *testing.T) {
@@ -36,10 +35,18 @@ func TestDoOptions(t *testing.T) {
 			maxThreads: -1,
 		}
 
-		require.Equal(t, MaxThreads(-1).do(doOpts).maxThreads, -1)
-		require.Equal(t, MaxThreads(0).do(doOpts).maxThreads, -1)
-		require.Equal(t, MaxThreads(1).do(doOpts).maxThreads, 1)
-		require.Equal(t, MaxThreads(2).do(doOpts).maxThreads, 2)
-		require.Equal(t, MaxThreads(3).do(doOpts).maxThreads, 3)
+		requireEqual(t, -1, MaxThreads(-1).do(doOpts).maxThreads)
+		requireEqual(t, -1, MaxThreads(0).do(doOpts).maxThreads)
+		requireEqual(t, 1, MaxThreads(1).do(doOpts).maxThreads)
+		requireEqual(t, 2, MaxThreads(2).do(doOpts).maxThreads)
+		requireEqual(t, 3, MaxThreads(3).do(doOpts).maxThreads)
 	})
+}
+
+func requireEqual(t *testing.T, expected, actual any) {
+	t.Helper()
+
+	if !reflect.DeepEqual(expected, actual) {
+		t.Fatalf("Not equal: %#+v != %#+v\n", expected, actual)
+	}
 }
