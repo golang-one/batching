@@ -9,7 +9,7 @@ import (
 
 // Do divides tasks into batches and runs provided function for each of them.
 // Do returns the first error encountered, or nil if there were no errors.
-// Do panics on calling goroutine if provided funcion panics.
+// Do panics on calling goroutine if provided function panics.
 func Do[T any](
 	ctx context.Context,
 	tasks []T,

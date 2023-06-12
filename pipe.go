@@ -9,7 +9,7 @@ import (
 
 // Pipe divides tasks into batches and runs provided function for each of them.
 // Pipe returns nil and the first error encountered, or processed results and nil if there were no errors.
-// Pipe panics on calling goroutine if provided funcion panics.
+// Pipe panics on calling goroutine if provided function panics.
 func Pipe[F, R any](
 	ctx context.Context,
 	tasks []F,
